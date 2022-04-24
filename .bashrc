@@ -66,7 +66,11 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    # ----------- Monte's edit: ---------------
+    # I'm commenting out the default so I can drop the user@hostname terms and put the '$' prompt on a new line
+    # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;34m\]\w\n\[\033[00m\]\$ '
+    # ----------------------------------------
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -139,4 +143,23 @@ bind "set completion-ignore-case on"
 # Turn off beep/bell:
 bind 'set bell-style none'
 
+# Change the prompt to show working directory  and then $ on line below
+# Explanation:
+# "\w" is for working directory
+# "\[\033[01;34m\]" turns the thing after it blue
+# "\$" is just the prompt symbol we choose
+# "\[\033[00m\]" resets the color to white instead of blue
+# Prompts also often include "\u@\h:" in front of this to display user and hostname
+# You can also include ${debian_chroot:+($debian_chroot)} to show if you are using a chroot
+# environment (usually won't show anything)
+# PS1='${debian_chroot:+($debian_chroot)}\[\033[01;34m\]\w\n\[\033[00m\]\$ '
+# A typical default you might see:
+#PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+
+
+# Colors for folders/files/executables in terminal:
+# export CLICOLOR=1
+# export LSCOLORS=GxFxCxDxBxegedabagaced
+
+# alias ll="ls -la"
 # ----------------------------
